@@ -26,12 +26,34 @@ namespace AWS_S3_TEXTRACT
             bool achouCepCompra = false;
             bool achouCnpjDeposito = false;
 
-            List<string> datas = new List<string> { dataCompra.ToString("dd/MM/yyyy") };
-            List<string> valores = new List<string> { valorCompra.ToString(), valorCompra.ToString().Replace(",", ".") };
-            List<string> ceps = new List<string> { cepCompra.Replace("-", ""), Convert.ToUInt64(cepCompra.Replace("-", "")).ToString("00000-000") };
+            List<string> datas = new List<string> { 
+                dataCompra.ToString("dd/MM/yy"), 
+                dataCompra.ToString("dd/MM/yyyy"),
+                dataCompra.ToString("dd/MMM/yyyy").ToUpper(),
+                dataCompra.ToString("dd MMM yyyy").ToUpper(),
+                dataCompra.ToString("dd ## MMMM ## yyyy").Replace("##", "de").ToUpper()
+            };
+
+            List<string> valores = new List<string> { 
+                valorCompra.ToString(), 
+                valorCompra.ToString().Replace(",", ".") 
+            };
+
+            List<string> ceps = new List<string> {
+                cepCompra.Replace("-", ""),
+                Convert.ToUInt64(cepCompra.Replace("-", "")).ToString("00000-000"),
+                Convert.ToUInt64(cepCompra.Replace("-", "")).ToString("00.000-000")
+            };
+
             List<string> cnpjsDeposito = new List<string>();
 
-            if (cnpjDeposito != null) cnpjsDeposito = new List<string> { cnpjDeposito.Replace(".", "").Replace("/", "").Replace("-", ""), Convert.ToUInt64(cnpjDeposito.Replace(".", "").Replace("/", "").Replace("-", "")).ToString("000.000.000/0000-00") };
+            if (cnpjDeposito != null)
+            {
+                cnpjsDeposito = new List<string> { 
+                    cnpjDeposito.Replace(".", "").Replace("/", "").Replace("-", ""), 
+                    Convert.ToUInt64(cnpjDeposito.Replace(".", "").Replace("/", "").Replace("-", "")).ToString("000.000.000/0000-00") 
+                };
+            }
 
             foreach (var item in ocrImagem)
             {
@@ -56,9 +78,9 @@ namespace AWS_S3_TEXTRACT
             return retorno;
         }
 
-        public static async Task<List<string>> OCRImagemAnexoS3Async(string nomeArquivo)
+        public static async Task<List<string>> OCRAnexoS3Async(string link)
         {
-            var resposta = await AWSTextract.DetectSampleAsync(nomeArquivo);
+            var resposta = await AWSTextract.DetectSampleAsync(link);
 
             return resposta;
         }

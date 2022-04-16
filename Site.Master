@@ -46,6 +46,7 @@
                         <li><a runat="server" href="~/">Início</a></li>
                         <li><a runat="server" href="~/EnviarImagem">Enviar Imagem</a></li>
                         <li><a runat="server" href="~/OCRImagem">OCR Imagem</a></li>
+                        <li><a runat="server" href="~/OCRPdf">OCR PDF</a></li>
                         <li><a runat="server" href="~/About">Sobre</a></li>
                         <li><a runat="server" href="~/Contact">Contato</a></li>
                     </ul>

@@ -131,6 +131,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="OCRImagem.aspx" />
+    <Content Include="OCRPdf.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
@@ -209,6 +210,13 @@
     </Compile>
     <Compile Include="OCRImagem.aspx.designer.cs">
       <DependentUpon>OCRImagem.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OCRPdf.aspx.cs">
+      <DependentUpon>OCRPdf.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OCRPdf.aspx.designer.cs">
+      <DependentUpon>OCRPdf.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">

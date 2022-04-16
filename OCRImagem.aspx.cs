@@ -12,11 +12,9 @@ namespace AWS_S3_TEXTRACT
         {
             if (!Page.IsPostBack)
             {
-                string bucketName = ConfigurationManager.AppSettings["BucketName"];
-                string serviceUrlAWS = ConfigurationManager.AppSettings["AWSServiceUrl"];
                 string imageAWS = ConfigurationManager.AppSettings["AWSTextractImageTest"];
-
-                ImageAWS.ImageUrl = (serviceUrlAWS + "/" + bucketName + "/" + imageAWS);
+                
+                ImageAWS.ImageUrl = imageAWS;
                 ImageAWS.Visible = true;
             }
         }
@@ -31,7 +29,7 @@ namespace AWS_S3_TEXTRACT
 
             try
             {
-                retorno = Task.Run(async () => await FuncoesComuns.OCRImagemAnexoS3Async(imageAWS)).Result;
+                retorno = Task.Run(async () => await FuncoesComuns.OCRAnexoS3Async(imageAWS)).Result;
 
                 string msg = "";
 
@@ -55,9 +53,9 @@ namespace AWS_S3_TEXTRACT
             string[] ocrImagem = lblMensagemOCR.Text.Split('|');
 
             List<string> retorno;
-            DateTime dataCompra = Convert.ToDateTime("25/06/2012");
-            decimal valorCompra = 9.28M;
-            string cepCompra = "40275240";
+            DateTime dataCompra = Convert.ToDateTime("19/10/2021");
+            decimal valorCompra = 37.00M;
+            string cepCompra = "76270000";
             string cnpjDeposito = null; //"63.358.000/0001-49";
 
             lblMensagemAnaliseOCR.Text = "Aguarde... Processando a análise do OCR da imagem...";

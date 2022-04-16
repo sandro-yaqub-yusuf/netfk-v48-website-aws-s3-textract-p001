@@ -1,15 +1,15 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="OCRImagem.aspx.cs" Inherits="AWS_S3_TEXTRACT.OCRImagem" %>
+﻿<%@ Page Title="OCR PDF" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="OCRPdf.aspx.cs" Inherits="AWS_S3_TEXTRACT.OCRPdf" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="panel panel-default floatLeft body-formulario">
         <div id="Titulo" class="title">
             <h2 class="tituloDefault">
-                <asp:Label ID="lblTitulo" Text="Teste de OCR em uma imagem salva no AWS usando o TEXTRACT" runat="server" />
+                <asp:Label ID="lblTitulo" Text="Teste de OCR em um arquivo PDF salvo no AWS usando o TEXTRACT" runat="server" />
             </h2>
         </div>
         <div class="row default-padding" style="margin-top: 30px;">
             <div class="col-xs-12 floatLeft">
-                <span style="font-weight: bold;">Retorno do OCR da imagem:</span>
+                <span style="font-weight: bold;">Retorno do OCR do arquivo PDF:</span>
             </div>
             <div class="col-xs-12 floatLeft" style="margin-top: 10px;">
                 <asp:Label ID="lblMensagemOCR" Text="Aguardando OCR..." runat="server" />
@@ -17,7 +17,7 @@
         </div>
         <div class="row default-padding" style="margin-top: 30px;">
             <div class="col-xs-12 floatLeft">
-                <span style="font-weight: bold;">Análise do retorno do OCR da imagem para saber se os dados do Comprovante estão corretos:</span>
+                <span style="font-weight: bold;">Análise do retorno do OCR do arquivo PDF para saber se os dados do Comprovante estão corretos:</span>
             </div>
             <div class="col-xs-12 floatLeft" style="margin-top: 10px;">
                 <asp:Label ID="lblMensagemAnaliseOCR" Text="Aguardando análise..." runat="server" />
@@ -25,16 +25,16 @@
         </div>
         <div id="divBotoesFinais" class="row default-padding" style="margin-top: 30px;">
             <div class="col-xs-12 floatLeft direita">
-                <asp:Button ID="btnOCRImage" Class="btn btn-primary" runat="server" Text="Aplicar OCR" Style="width: 120px" OnClick="btnOCRImage_Click" />
-                <asp:Button ID="btnAnalisarOCRImagem" Class="btn btn-primary" runat="server" Text="Aplicar Análise OCR" Style="width: 160px" OnClick="btnAnalisarOCRImagem_Click" />
+                <asp:Button ID="btnOCRPdf" Class="btn btn-primary" runat="server" Text="Aplicar OCR" Style="width: 120px" OnClick="btnOCRPdf_Click" />
+                <asp:Button ID="btnAnalisarOCRPdf" Class="btn btn-primary" runat="server" Text="Aplicar Análise OCR" Style="width: 160px" OnClick="btnAnalisarOCRPdf_Click" />
             </div>
         </div>
         <div class="row default-padding" style="margin-top: 30px;">
             <div class="col-xs-12 floatLeft">
-                <span style="font-weight: bold;">Dados do Comprovante => Data Compra: 19/10/2021 - Valor Compra: R$ 37,00 - CEP Compra: 76270-000</span>
+                <span style="font-weight: bold;">Dados do Comprovante => Data Compra: 16/10/2021 - Valor Compra: R$ 8,92 - CEP Compra: 05426-100</span>
             </div>
             <div id="divImagemAWS" class="col-xs-12 floatLeft" style="margin-top: 10px;">
-                <asp:Image ID="ImageAWS" Visible = "false" runat="server" Height = "500" Width = "500" />
+                <iframe id="iframePDF" src="https://s3.amazonaws.com/sgm-usa/comprovantes_prestacao/2021-11/2021_11_05_19_09_19_607_WvdhS2K1MTA8exx_490318.pdf" runat="server" width="900" height="900"  />
             </div>
         </div>
     </div>

@@ -9,8 +9,11 @@
 
 namespace AWS_S3_TEXTRACT
 {
-    public partial class OCRImagem
+
+
+    public partial class OCRPdf
     {
+
         /// <summary>
         /// Controle lblTitulo.
         /// </summary>
@@ -39,30 +42,30 @@ namespace AWS_S3_TEXTRACT
         protected global::System.Web.UI.WebControls.Label lblMensagemAnaliseOCR;
 
         /// <summary>
-        /// Controle btnOCRImage.
+        /// Controle btnOCRPdf.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnOCRImage;
+        protected global::System.Web.UI.WebControls.Button btnOCRPdf;
 
         /// <summary>
-        /// Controle btnAnalisarOCRImagem.
+        /// Controle btnAnalisarOCRPdf.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAnalisarOCRImagem;
+        protected global::System.Web.UI.WebControls.Button btnAnalisarOCRPdf;
 
         /// <summary>
-        /// Controle ImageAWS.
+        /// Controle iframePDF.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image ImageAWS;
+        protected global::System.Web.UI.HtmlControls.HtmlIframe iframePDF;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Threading.Tasks;
@@ -12,52 +13,60 @@ namespace AWS_S3_TEXTRACT
 {
     public class AWSTextract
     {
-        public static async Task<List<string>> DetectSampleAsync(string nomeArquivo)
+        public static async Task<List<string>> DetectSampleAsync(string link)
         {
-            MemoryStream imagem;
+            List<string> retorno = new List<string>();
 
-            string bucketName = ConfigurationManager.AppSettings["BucketName"];
-            string s3ServiceUrl = ConfigurationManager.AppSettings["AWSServiceUrl"];
-            string accessKey = ConfigurationManager.AppSettings["AWSAccessKey"];
-            string secretAccessKey = ConfigurationManager.AppSettings["AWSSecretKey"];
-
-            var s3Config = new AmazonS3Config() { ServiceURL = s3ServiceUrl };
-
-            using (var s3Client = new AmazonS3Client(accessKey, secretAccessKey, s3Config))
+            try
             {
-                GetObjectRequest getObjectRequest = new GetObjectRequest();
-                getObjectRequest.BucketName = bucketName;
-                getObjectRequest.Key = nomeArquivo;
+                MemoryStream imagem;
 
-                using (var getObjectResponse = s3Client.GetObject(getObjectRequest))
+                string bucketName = ConfigurationManager.AppSettings["BucketName"];
+                string s3ServiceUrl = ConfigurationManager.AppSettings["AWSServiceUrl"];
+                string accessKey = ConfigurationManager.AppSettings["AWSAccessKey"];
+                string secretAccessKey = ConfigurationManager.AppSettings["AWSSecretKey"];
+                string nomeArquivo = link.Replace((bucketName + "/"), "").Replace((s3ServiceUrl + "/"), "");
+
+                var s3Config = new AmazonS3Config() { ServiceURL = s3ServiceUrl };
+
+                using (var s3Client = new AmazonS3Client(accessKey, secretAccessKey, s3Config))
                 {
-                    using (var ms = new MemoryStream())
-                    {
-                        await getObjectResponse.ResponseStream.CopyToAsync(ms);
+                    GetObjectRequest getObjectRequest = new GetObjectRequest();
+                    getObjectRequest.BucketName = bucketName;
+                    getObjectRequest.Key = nomeArquivo;
 
-                        imagem = ms;
+                    using (var getObjectResponse = s3Client.GetObject(getObjectRequest))
+                    {
+                        using (var ms = new MemoryStream())
+                        {
+                            await getObjectResponse.ResponseStream.CopyToAsync(ms);
+
+                            imagem = ms;
+                        }
+                    }
+                }
+
+                using (var textractClient = new AmazonTextractClient(RegionEndpoint.USEast1))
+                {
+                    var bytes = imagem.ToArray();
+
+                    var detectResponse = await textractClient.DetectDocumentTextAsync(new DetectDocumentTextRequest
+                    {
+                        Document = new Document
+                        {
+                            Bytes = new MemoryStream(bytes)
+                        }
+                    });
+
+                    foreach (var block in detectResponse.Blocks)
+                    {
+                        if (block.Text != null) if (block.Text.Trim().Length > 0) retorno.Add(block.Text.Trim().ToUpper());
                     }
                 }
             }
-
-            List<string> retorno = new List<string>();
-
-            using (var textractClient = new AmazonTextractClient(RegionEndpoint.USEast1))
+            catch (Exception ex)
             {
-                var bytes = imagem.ToArray();
-
-                var detectResponse = await textractClient.DetectDocumentTextAsync(new DetectDocumentTextRequest
-                {
-                    Document = new Document
-                    {
-                        Bytes = new MemoryStream(bytes)
-                    }
-                });
-
-                foreach (var block in detectResponse.Blocks)
-                {
-                    if (block.Text != null) if (block.Text.Trim().Length > 0) retorno.Add(block.Text.Trim().ToUpper());
-                }
+                retorno.Add("ERRO => " + ex.Message);
             }
 
             return retorno;

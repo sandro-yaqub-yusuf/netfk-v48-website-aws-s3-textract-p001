@@ -26,7 +26,13 @@ namespace AWS_S3_TEXTRACT
             bool achouCepCompra = false;
             bool achouCnpjDeposito = false;
 
-            List<string> datas = new List<string> { 
+            List<string> datas = new List<string> {
+                dataCompra.ToString("dd,M,yy"),
+                dataCompra.ToString("dd.M.yy"),
+                dataCompra.ToString("dd/M/yy"),
+                dataCompra.ToString("dd/M/yyyy"),
+                dataCompra.ToString("dd,MM,yy"),
+                dataCompra.ToString("dd.MM.yy"),
                 dataCompra.ToString("dd/MM/yy"), 
                 dataCompra.ToString("dd/MM/yyyy"),
                 dataCompra.ToString("dd/MMM/yyyy").ToUpper(),
@@ -39,19 +45,24 @@ namespace AWS_S3_TEXTRACT
                 valorCompra.ToString().Replace(",", ".") 
             };
 
-            List<string> ceps = new List<string> {
-                cepCompra.Replace("-", ""),
-                Convert.ToUInt64(cepCompra.Replace("-", "")).ToString("00000-000"),
-                Convert.ToUInt64(cepCompra.Replace("-", "")).ToString("00.000-000")
-            };
-
+            List<string> ceps = new List<string>();
             List<string> cnpjsDeposito = new List<string>();
 
             if (cnpjDeposito != null)
             {
-                cnpjsDeposito = new List<string> { 
-                    cnpjDeposito.Replace(".", "").Replace("/", "").Replace("-", ""), 
-                    Convert.ToUInt64(cnpjDeposito.Replace(".", "").Replace("/", "").Replace("-", "")).ToString("000.000.000/0000-00") 
+                cnpjsDeposito = new List<string> {
+                    cnpjDeposito.Replace(".", "").Replace("/", "").Replace("-", ""),
+                    Convert.ToUInt64(cnpjDeposito.Replace(".", "").Replace("/", "").Replace("-", "")).ToString("000.000.000/0000-00")
+                };
+            }
+            else
+            {
+                cepCompra = cepCompra.Replace("N/A", "000");
+
+                ceps = new List<string> {
+                    cepCompra.Replace("-", ""),
+                    Convert.ToUInt64(cepCompra.Replace("-", "")).ToString("00000-000"),
+                    Convert.ToUInt64(cepCompra.Replace("-", "")).ToString("00.000-000")
                 };
             }
 

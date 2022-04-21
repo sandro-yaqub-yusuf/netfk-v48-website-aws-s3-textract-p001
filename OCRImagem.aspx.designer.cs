@@ -9,8 +9,11 @@
 
 namespace AWS_S3_TEXTRACT
 {
+
+
     public partial class OCRImagem
     {
+
         /// <summary>
         /// Controle lblTitulo.
         /// </summary>
@@ -55,6 +58,15 @@ namespace AWS_S3_TEXTRACT
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAnalisarOCRImagem;
+
+        /// <summary>
+        /// Controle lblComprovante.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblComprovante;
 
         /// <summary>
         /// Controle ImageAWS.

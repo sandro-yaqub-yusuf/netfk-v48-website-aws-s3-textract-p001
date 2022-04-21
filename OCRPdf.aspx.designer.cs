@@ -60,6 +60,15 @@ namespace AWS_S3_TEXTRACT
         protected global::System.Web.UI.WebControls.Button btnAnalisarOCRPdf;
 
         /// <summary>
+        /// Controle lblComprovante.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblComprovante;
+
+        /// <summary>
         /// Controle iframePDF.
         /// </summary>
         /// <remarks>

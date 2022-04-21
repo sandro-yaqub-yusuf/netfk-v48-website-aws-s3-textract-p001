@@ -31,7 +31,7 @@
         </div>
         <div class="row default-padding" style="margin-top: 30px;">
             <div class="col-xs-12 floatLeft">
-                <span style="font-weight: bold;">Dados do Comprovante => Data Compra: 19/10/2021 - Valor Compra: R$ 37,00 - CEP Compra: 76270-000</span>
+                <asp:Label ID="lblComprovante" Text="Comprovante" runat="server" />
             </div>
             <div id="divImagemAWS" class="col-xs-12 floatLeft" style="margin-top: 10px;">
                 <asp:Image ID="ImageAWS" Visible = "false" runat="server" Height = "500" Width = "500" />

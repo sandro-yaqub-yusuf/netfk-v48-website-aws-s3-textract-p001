@@ -31,7 +31,7 @@
         </div>
         <div class="row default-padding" style="margin-top: 30px;">
             <div class="col-xs-12 floatLeft">
-                <span style="font-weight: bold;">Dados do Comprovante => Data Compra: 16/10/2021 - Valor Compra: R$ 8,92 - CEP Compra: 05426-100</span>
+                <asp:Label ID="lblComprovante" Text="Comprovante" runat="server" />
             </div>
             <div id="divImagemAWS" class="col-xs-12 floatLeft" style="margin-top: 10px;">
                 <iframe id="iframePDF" src="https://s3.amazonaws.com/sgm-usa/comprovantes_prestacao/2021-11/2021_11_05_19_09_19_607_WvdhS2K1MTA8exx_490318.pdf" runat="server" width="900" height="900"  />

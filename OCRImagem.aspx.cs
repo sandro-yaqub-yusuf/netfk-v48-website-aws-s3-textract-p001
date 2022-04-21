@@ -8,6 +8,11 @@ namespace AWS_S3_TEXTRACT
 {
     public partial class OCRImagem : Page
     {
+        private readonly DateTime dataCompra = Convert.ToDateTime("21/04/2022");
+        private readonly decimal valorCompra = 45.00M;
+        private readonly string cepCompra = "13213100";
+        private readonly string cnpjDeposito = null; //"00000000000000";
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -16,6 +21,8 @@ namespace AWS_S3_TEXTRACT
                 
                 ImageAWS.ImageUrl = imageAWS;
                 ImageAWS.Visible = true;
+
+                lblComprovante.Text = string.Format("Dados do Comprovante => Data: {0} - Valor: {1} - Cep: {2}", dataCompra.ToString("dd/MM/yyyy"), valorCompra, cepCompra);
             }
         }
 
@@ -31,14 +38,7 @@ namespace AWS_S3_TEXTRACT
             {
                 retorno = Task.Run(async () => await FuncoesComuns.OCRAnexoS3Async(imageAWS)).Result;
 
-                string msg = "";
-
-                foreach (var item in retorno)
-                {
-                    msg += item + " | ";
-                }
-
-                lblMensagemOCR.Text = msg;
+                lblMensagemOCR.Text = String.Join(" | ", retorno);
             }
             catch (Exception ex)
             {
@@ -48,19 +48,15 @@ namespace AWS_S3_TEXTRACT
 
         protected void btnAnalisarOCRImagem_Click(object sender, EventArgs e)
         {
-            //lblMensagemOCR.Text = "MONTEIRO BRAGA CONSULTORIA EMPRESARIAL LTDA | DEALERNET | R. ANDRÉ L. R. DAFONTE 25/26 - SALA 601 | 42.700-000 L. DE FREITAS - BA | CNPJ:63.358.000/0001-49 | IE:66994360-N0 | UF:BA | M:ISENTO | 25/06/2012 14:36:29 CCF:000002 | COO:000005 | CNPJ/CPF CONSUMIDOR:LL1.111.111/11 | NOME:URSO DA BATUCADA | END:RUA ALMIRANTE BARROSO. N°40. VITORIA, CEP:4 | 0275240. SALVADOR-BA | CUPOM FISCAL | ITEM CÓDIGO DESCRIÇÃO QTD. UN. VL_UNIT( R$) ST VL_ | ITEM( R$) | 001 13435708 | ABRACADEIRA 90.5 | 1UN X 9.28 | F1 | 9.28G | TOTAL R$ | 9.28 | DINHEIRO | 9.28 | D-5:CBF73CC09FFFC7EE5FABACB4D9F3901D | PV:0000005390 I NS :0093976-1 | MINAS LEGAL 14552558000194 25062012 928 | BEMATECH | MP-2100 TH FI | ECF-IF | VERSÃO:01.00.01 | ECF:001 LJ:0001 | 25/06/2012 14:37:05 | FAB:EMULADOR | BR | MONTEIRO | BRAGA CONSULTORIA | EMPRESARIAL | LTDA | DEALERNET | R. | ANDRÉ | L. | R. | DAFONTE | 25/26 | - | SALA | 601 | 42.700-000 | L. | DE | FREITAS | - | BA | CNPJ:63.358.000/0001-49 | IE:66994360-N0 | UF:BA | M:ISENTO | 25/06/2012 | 14:36:29 | CCF:000002 | COO:000005 | CNPJ/CPF | CONSUMIDOR:LL1.111.111/11 | NOME:URSO | DA | BATUCADA | END:RUA | ALMIRANTE | BARROSO. | N°40. | VITORIA, | CEP:4 | 0275240. | SALVADOR-BA | CUPOM | FISCAL | ITEM | CÓDIGO | DESCRIÇÃO | QTD. | UN. | VL_UNIT( | R$) | ST | VL_ | ITEM( | R$) | 001 | 13435708 | ABRACADEIRA | 90.5 | 1UN | X | 9.28 | F1 | 9.28G | TOTAL | R$ | 9.28 | DINHEIRO | 9.28 | D-5:CBF73CC09FFFC7EE5FABACB4D9F3901D | PV:0000005390 | I | NS | :0093976-1 | MINAS | LEGAL | 14552558000194 | 25062012 | 928 | BEMATECH | MP-2100 | TH | FI | ECF-IF | VERSÃO:01.00.01 | ECF:001 | LJ:0001 | 25/06/2012 | 14:37:05 | FAB:EMULADOR | BR | ";
+            //lblMensagemOCR.Text = "";
 
-            string[] ocrImagem = lblMensagemOCR.Text.Split('|');
+            string ocrArquivo = lblMensagemOCR.Text.Replace(" | ", " ");
 
             List<string> retorno;
-            DateTime dataCompra = Convert.ToDateTime("19/10/2021");
-            decimal valorCompra = 37.00M;
-            string cepCompra = "76270000";
-            string cnpjDeposito = null; //"63.358.000/0001-49";
 
             lblMensagemAnaliseOCR.Text = "Aguarde... Processando a análise do OCR da imagem...";
 
-            retorno = FuncoesComuns.AnalisarOCRComprovantePC(ocrImagem, dataCompra, valorCompra, cepCompra, cnpjDeposito);
+            retorno = FuncoesComuns.AnalisarOCRComprovantePC(ocrArquivo, dataCompra, valorCompra, cepCompra, cnpjDeposito);
 
             string msg = "";
 

@@ -17,7 +17,7 @@ namespace AWS_S3_TEXTRACT
             return result;
         }
 
-        public static List<string> AnalisarOCRComprovantePC(string[] ocrImagem, DateTime dataCompra, decimal valorCompra, string cepCompra, string cnpjDeposito = null)
+        public static List<string> AnalisarOCRComprovantePC(string ocrArquivo, DateTime dataCompra, decimal valorCompra, string cepCompra, string cnpjDeposito = null)
         {
             List<string> retorno = new List<string>();
 
@@ -66,19 +66,16 @@ namespace AWS_S3_TEXTRACT
                 };
             }
 
-            foreach (var item in ocrImagem)
-            {
-                if (!achouDataCompra) achouDataCompra = datas.Any(w => item.Contains(w));
-                if (!achouValorCompra) achouValorCompra = valores.Any(w => item.Contains(w));
+            if (!achouDataCompra) achouDataCompra = datas.Any(w => ocrArquivo.Contains(w));
+            if (!achouValorCompra) achouValorCompra = valores.Any(w => ocrArquivo.Contains(w));
 
-                if (cnpjDeposito != null)
-                {
-                    if (!achouCnpjDeposito) achouCnpjDeposito = cnpjDeposito.Any(w => item.Contains(w));
-                }
-                else
-                {
-                    if (!achouCepCompra) achouCepCompra = ceps.Any(w => item.Contains(w));
-                }
+            if (cnpjDeposito != null)
+            {
+                if (!achouCnpjDeposito) achouCnpjDeposito = cnpjDeposito.Any(w => ocrArquivo.Contains(w));
+            }
+            else
+            {
+                if (!achouCepCompra) achouCepCompra = ceps.Any(w => ocrArquivo.Contains(w));
             }
 
             if (achouDataCompra) retorno.Add("Data Compra: OK"); else retorno.Add("Data Compra: divergente");

@@ -60,7 +60,14 @@ namespace AWS_S3_TEXTRACT
 
                     foreach (var block in detectResponse.Blocks)
                     {
-                        if (block.Text != null) if (block.Text.Trim().Length > 0) retorno.Add(block.Text.Trim().ToUpper());
+                        //if (block.BlockType.Value == "LINE")
+                        //{
+                        //    if (block.Text != null) if (block.Text.Trim().Length > 0) retorno.Add("LINE: " + block.Text.Trim().ToUpper());
+                        //}
+                        if (block.BlockType.Value == "WORD")
+                        {
+                            if (block.Text != null) if (block.Text.Trim().Length > 0) retorno.Add(block.Text.Replace("\"", "").Trim().ToUpper());
+                        }
                     }
                 }
             }

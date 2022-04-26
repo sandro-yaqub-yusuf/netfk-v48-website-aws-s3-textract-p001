@@ -16,7 +16,7 @@ namespace AWS_S3_TEXTRACT
             try
             {
                 string bucketName = ConfigurationManager.AppSettings["BucketName"];
-                string destino = "comprovantes_prestacao/" + DateTime.Now.Year.ToString("D4") + "-" + DateTime.Now.Month.ToString("D2");
+                string destino = "comprovantes_prestacao_homologa/" + DateTime.Now.Year.ToString("D4") + "-" + DateTime.Now.Month.ToString("D2");
                 string s3ServiceUrl = ConfigurationManager.AppSettings["AWSServiceUrl"];
                 string accessKey = ConfigurationManager.AppSettings["AWSAccessKey"];
                 string secretAccessKey = ConfigurationManager.AppSettings["AWSSecretKey"];

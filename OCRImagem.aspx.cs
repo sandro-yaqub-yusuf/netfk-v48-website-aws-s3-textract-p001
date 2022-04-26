@@ -8,9 +8,9 @@ namespace AWS_S3_TEXTRACT
 {
     public partial class OCRImagem : Page
     {
-        private readonly DateTime dataCompra = Convert.ToDateTime("21/04/2022");
-        private readonly decimal valorCompra = 45.00M;
-        private readonly string cepCompra = "13213100";
+        private readonly DateTime dataCompra = Convert.ToDateTime("02/02/2022");
+        private readonly decimal valorCompra = 1051.55M;
+        private readonly string cepCompra = "40275240";
         private readonly string cnpjDeposito = null; //"00000000000000";
 
         protected void Page_Load(object sender, EventArgs e)

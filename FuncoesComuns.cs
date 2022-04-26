@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,28 +22,41 @@ namespace AWS_S3_TEXTRACT
         {
             List<string> retorno = new List<string>();
 
+            CultureInfo culture = CultureInfo.CreateSpecificCulture("pt-BR");
+
             bool achouDataCompra = false;
             bool achouValorCompra = false;
             bool achouCepCompra = false;
             bool achouCnpjDeposito = false;
 
             List<string> datas = new List<string> {
+                dataCompra.ToString("dd M yy"),
                 dataCompra.ToString("dd,M,yy"),
                 dataCompra.ToString("dd.M.yy"),
+                dataCompra.ToString("dd-M-yy"),
                 dataCompra.ToString("dd/M/yy"),
                 dataCompra.ToString("dd/M/yyyy"),
+                dataCompra.ToString("dd MM yy"),
                 dataCompra.ToString("dd,MM,yy"),
                 dataCompra.ToString("dd.MM.yy"),
-                dataCompra.ToString("dd/MM/yy"), 
+                dataCompra.ToString("dd-MM-yy"),
+                dataCompra.ToString("dd/MM/yy"),
+                dataCompra.ToString("dd MM yyyy"),
+                dataCompra.ToString("dd,MM,yyyy"),
+                dataCompra.ToString("dd.MM.yyyy"),
+                dataCompra.ToString("dd-MM-yyyy"),
                 dataCompra.ToString("dd/MM/yyyy"),
                 dataCompra.ToString("dd/MMM/yyyy").ToUpper(),
                 dataCompra.ToString("dd MMM yyyy").ToUpper(),
+                dataCompra.ToString("dd / MM ## yyyy").Replace("##", "de").ToUpper(),
+                dataCompra.ToString("dd / MMMM ## yyyy").Replace("##", "de").ToUpper(),
                 dataCompra.ToString("dd ## MMMM ## yyyy").Replace("##", "de").ToUpper()
             };
 
             List<string> valores = new List<string> { 
                 valorCompra.ToString(), 
-                valorCompra.ToString().Replace(",", ".") 
+                valorCompra.ToString().Replace(",", "."),
+                valorCompra.ToString("N", culture)
             };
 
             List<string> ceps = new List<string>();

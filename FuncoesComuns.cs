@@ -56,7 +56,8 @@ namespace AWS_S3_TEXTRACT
             List<string> valores = new List<string> { 
                 valorCompra.ToString(), 
                 valorCompra.ToString().Replace(",", "."),
-                valorCompra.ToString("N", culture)
+                valorCompra.ToString("N", culture),
+                valorCompra.ToString("N", culture).Replace(",", ".")
             };
 
             List<string> ceps = new List<string>();
@@ -102,7 +103,13 @@ namespace AWS_S3_TEXTRACT
 
         public static async Task<List<string>> OCRAnexoS3Async(string link)
         {
-            var resposta = await AWSTextract.DetectSampleAsync(link);
+            List<string> resposta;
+
+            string url = @link;
+            string ext = Path.GetExtension(url).ToLower().Trim();
+
+            if (ext == ".pdf") resposta = await AWSTextract.StartDetectSampleAsync(link);
+            else resposta = await AWSTextract.DetectSampleAsync(link);
 
             return resposta;
         }

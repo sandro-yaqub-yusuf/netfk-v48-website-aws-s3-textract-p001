@@ -67,7 +67,7 @@ namespace AWS_S3_TEXTRACT
             {
                 cnpjsDeposito = new List<string> {
                     cnpjDeposito.Replace(".", "").Replace("/", "").Replace("-", ""),
-                    Convert.ToUInt64(cnpjDeposito.Replace(".", "").Replace("/", "").Replace("-", "")).ToString("000.000.000/0000-00")
+                    string.Format(@"{0:00\.000\.000\/0000\-00}", long.Parse(cnpjDeposito.Replace(".", "").Replace("/", "").Replace("-", "")))
                 };
             }
             else
@@ -76,8 +76,8 @@ namespace AWS_S3_TEXTRACT
 
                 ceps = new List<string> {
                     cepCompra.Replace("-", ""),
-                    Convert.ToUInt64(cepCompra.Replace("-", "")).ToString("00000-000"),
-                    Convert.ToUInt64(cepCompra.Replace("-", "")).ToString("00.000-000")
+                    string.Format(@"{0:00000\-000}", long.Parse(cepCompra.Replace("-", ""))),
+                    string.Format(@"{0:00\.000\-000}", long.Parse(cepCompra.Replace("-", "")))
                 };
             }
 
@@ -86,7 +86,7 @@ namespace AWS_S3_TEXTRACT
 
             if (cnpjDeposito != null)
             {
-                if (!achouCnpjDeposito) achouCnpjDeposito = cnpjDeposito.Any(w => ocrArquivo.Contains(w));
+                if (!achouCnpjDeposito) achouCnpjDeposito = cnpjsDeposito.Any(w => ocrArquivo.Contains(w));
             }
             else
             {
